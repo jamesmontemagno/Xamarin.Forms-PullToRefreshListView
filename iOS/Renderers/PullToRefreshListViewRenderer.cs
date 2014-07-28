@@ -15,31 +15,35 @@ namespace PullToRefresh.iOS.Renderers
 		}
 
 		private FormsUIRefreshControl refreshControl;
-		protected override void OnModelSet(VisualElement model)
-		{
-			base.OnModelSet(model);
+	
 
-			var pullToRefreshListView = (PullToRefreshListView)this.Model; 
-			var tableView = (UITableView) this.Control;
+		protected override void OnElementChanged (ElementChangedEventArgs<ListView> e)
+		{
+			base.OnElementChanged (e);
+
+			if (refreshControl != null)
+				return;
+
+			var pullToRefreshListView = (PullToRefreshListView)this.Element; 
 
 			refreshControl = new FormsUIRefreshControl ();
 			refreshControl.RefreshCommand = pullToRefreshListView.RefreshCommand;
 			refreshControl.Message = pullToRefreshListView.Message;
-			tableView.AddSubview (refreshControl);
+			this.Control.AddSubview (refreshControl);
 		}
 
-
 		/// <summary>
-		/// Called when the underlying model's properties are changed
+		/// Raises the element property changed event.
 		/// </summary>
-		/// <param name="sender">Model</param>
-		/// <param name="e">Event arguments</param>
-		protected override void OnHandlePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		/// <param name="sender">Sender.</param>
+		/// <param name="e">E.</param>
+		protected override void OnElementPropertyChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
-			base.OnHandlePropertyChanged(sender, e);
+			base.OnElementPropertyChanged (sender, e);
+			var pullToRefreshListView = this.Element as PullToRefreshListView;
+			if(pullToRefreshListView == null)
+				return;
 
-			var pullToRefreshListView = (PullToRefreshListView)this.Model; 
-	
 
 			if (e.PropertyName == PullToRefreshListView.IsRefreshingProperty.PropertyName) {
 				refreshControl.IsRefreshing = pullToRefreshListView.IsRefreshing;
