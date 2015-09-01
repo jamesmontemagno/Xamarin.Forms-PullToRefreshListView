@@ -1,5 +1,6 @@
 Xamarin.Forms-PullToRefreshListView
 ===================================
+See the new official way here: http://motzcod.es/post/113280718807/official-pull-to-refresh-in-xamarinforms-140
 
 For the latest code and other new awesome controls see my new repo: https://github.com/jamesmontemagno/Xamarin.Forms-Awesome-Controls
 
